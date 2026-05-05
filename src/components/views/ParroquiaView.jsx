@@ -55,7 +55,7 @@ const ParroquiaView = () => {
     <div className="landing-page animate-fade">
       {/* Navegación */}
       <nav className="landing-nav">
-        <Link to="/" className="logo">Parroquia CHICLAYO</Link>
+        <Link to="/" className="logo">Parroquia CHICLAYO [V2]</Link>
         
         <button className="nav-toggle" onClick={() => setIsMenuOpen(!isMenuOpen)}>
           {isMenuOpen ? '✕' : '☰'}
