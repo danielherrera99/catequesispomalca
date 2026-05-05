@@ -392,7 +392,7 @@ const Dashboard = ({ user, onLogout }) => {
       else if (activeTab === 'Mensajes') endpoint = '/mensajes/admin/todas';
       else if (activeTab === 'Perfil') endpoint = '/auth/perfil';
       else if (activeTab === 'Chat') endpoint = '/mensajes/conversaciones';
-      else if (activeTab === 'Tienda') endpoint = '/tienda';
+      // Tienda se maneja internamente en su componente para evitar bloqueos globales
       else if (activeTab === 'Dashboard') {
         const [MiembrosRes, anunciosRes, eventosRes, asisRes] = await Promise.all([
           api.get('/Miembros?todos=true'),
