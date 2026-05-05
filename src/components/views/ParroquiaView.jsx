@@ -89,42 +89,7 @@ const ParroquiaView = () => {
         </div>
       </header>
 
-      {/* Sección Identidad */}
-      <section id="historia" className="section-padding" style={{ background: 'white' }}>
-        <div style={{ maxWidth: '900px', margin: '0 auto', textAlign: 'center' }}>
-          <h2 className="section-title">¿Quiénes somos?</h2>
-          <p style={{ fontSize: 'clamp(1rem, 3vw, 1.25rem)', lineHeight: '1.8', color: 'var(--text-muted)' }}>
-            {config.quienesSomos}
-          </p>
-        </div>
-      </section>
-
-      {/* Pilares Parroquia */}
-      <section id="pilares" className="features-grid section-padding" style={{ background: 'rgba(139, 69, 19, 0.02)' }}>
-        <div className="feature-card">
-          <div className="feature-icon-wrapper">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-          </div>
-          <h3>Vida Secular</h3>
-          <p>Llevamos el espíritu de San Francisco a nuestras familias, trabajos y vida cotidiana, siendo luz en medio del mundo.</p>
-        </div>
-        <div className="feature-card">
-          <div className="feature-icon-wrapper">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
-          </div>
-          <h3>Comunidad</h3>
-          <p>Nos reunimos como Miembros para apoyarnos en el camino espiritual y fortalecer nuestro compromiso cristiano.</p>
-        </div>
-        <div className="feature-card">
-          <div className="feature-icon-wrapper">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-          </div>
-          <h3>Misión</h3>
-          <p>Somos instrumentos de paz, justicia y caridad, promoviendo los valores evangélicos en la sociedad actual.</p>
-        </div>
-      </section>
-
-      {/* Nueva Sección: Oramos por ti */}
+      {/* Nueva Sección: Oramos por ti (AHORA AL INICIO) */}
       <section id="oracion" className="section-padding" style={{ background: 'white' }}>
         <div className="glass-card animate-fade flex-responsive" style={{ 
           maxWidth: '1000px', 
@@ -164,6 +129,41 @@ const ParroquiaView = () => {
               Enviar Petición vía WhatsApp
             </a>
           </div>
+        </div>
+      </section>
+
+      {/* Sección Identidad */}
+      <section id="historia" className="section-padding" style={{ background: 'white' }}>
+        <div style={{ maxWidth: '900px', margin: '0 auto', textAlign: 'center' }}>
+          <h2 className="section-title">¿Quiénes somos?</h2>
+          <p style={{ fontSize: 'clamp(1rem, 3vw, 1.25rem)', lineHeight: '1.8', color: 'var(--text-muted)' }}>
+            {config.quienesSomos}
+          </p>
+        </div>
+      </section>
+
+      {/* Pilares Parroquia */}
+      <section id="pilares" className="features-grid section-padding" style={{ background: 'rgba(139, 69, 19, 0.02)' }}>
+        <div className="feature-card">
+          <div className="feature-icon-wrapper">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+          </div>
+          <h3>Vida Secular</h3>
+          <p>Llevamos el espíritu de San Francisco a nuestras familias, trabajos y vida cotidiana, siendo luz en medio del mundo.</p>
+        </div>
+        <div className="feature-card">
+          <div className="feature-icon-wrapper">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+          </div>
+          <h3>Comunidad</h3>
+          <p>Nos reunimos como Miembros para apoyarnos en el camino espiritual y fortalecer nuestro compromiso cristiano.</p>
+        </div>
+        <div className="feature-card">
+          <div className="feature-icon-wrapper">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+          </div>
+          <h3>Misión</h3>
+          <p>Somos instrumentos de paz, justicia y caridad, promoviendo los valores evangélicos en la sociedad actual.</p>
         </div>
       </section>
 
