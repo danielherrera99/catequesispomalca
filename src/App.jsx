@@ -150,7 +150,7 @@ const Login = ({ onLogin }) => {
         localStorage.setItem('user', JSON.stringify(data.usuario));
         onLogin(data.usuario);
       } else {
-        setError('Acceso denegado: Solo miembros del consejo.');
+        setError('Acceso denegado: Solo miembros de la Directiva.');
       }
     } catch (err) {
       setError('Credenciales inválidas o cuenta no aprobada.');
@@ -188,7 +188,7 @@ const Login = ({ onLogin }) => {
 const modules = [
   { id: 'Dashboard', label: 'Inicio (Panel)', icon: '🏠' },
   { id: 'Miembros', label: 'Miembros', icon: '👤' },
-  { id: 'Consejo', label: 'El Consejo', icon: '🛡️' },
+  { id: 'Consejo', label: 'La Directiva', icon: '🛡️' },
   { id: 'Espiritu', label: 'Espíritu', icon: '🔥' },
   { id: 'Asistencia', label: 'Asistencia (QR)', icon: '✅' },
   { id: 'Anuncios', label: 'Anuncios', icon: '📢' },
