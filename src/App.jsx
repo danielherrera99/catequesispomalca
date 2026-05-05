@@ -1563,6 +1563,7 @@ function App() {
           {/* Cara Pública */}
           <Route path="/" element={<LandingView />} />
           <Route path="/familia-Parroquia" element={<ParroquiaView />} />
+          <Route path="/familia-ofs" element={<ParroquiaView />} />
           
           {/* Panel de Administración (Privado) */}
           <Route path="/admin" element={!user ? <Login onLogin={setUser} /> : <Navigate to="/dashboard" />} />
