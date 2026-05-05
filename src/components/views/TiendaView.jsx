@@ -71,7 +71,7 @@ const TiendaView = ({ formatSafeDate }) => {
         const url = URL.createObjectURL(blob);
         const link = document.createElement('a');
         link.href = url;
-        link.download = `Reporte_Tienda_${new Date().toLocaleDateString().replace(/\//g, '-')}.csv`;
+        link.download = `Reporte_Finanzas_${new Date().toLocaleDateString().replace(/\//g, '-')}.csv`;
         link.click();
         URL.revokeObjectURL(url);
     };
@@ -85,7 +85,7 @@ const TiendaView = ({ formatSafeDate }) => {
             )}
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
                 <div>
-                    <h2 className="section-title" style={{ textAlign: 'left', margin: 0 }}>Gestión de Tienda</h2>
+                    <h2 className="section-title" style={{ textAlign: 'left', margin: 0 }}>Gestión de Finanzas</h2>
                     <p style={{ color: 'var(--text-muted)' }}>Control de ingresos y egresos de la catequesis.</p>
                 </div>
                 <div style={{ display: 'flex', gap: '1rem' }}>

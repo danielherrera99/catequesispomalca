@@ -206,7 +206,7 @@ const modules = [
   { id: 'Comunicacion', label: 'Comunicación', icon: '📢' },
   { id: 'WebConfig', label: 'Web Institucional', icon: '🌐' },
   {id: 'ParroquiaConfig', label: 'Configuración Parroquia', icon: '☦️'},
-  { id: 'Tienda', label: 'Tienda (Economía)', icon: '🏪' },
+  { id: 'Tienda', label: 'Finanzas', icon: '💰' },
   { id: 'Perfil', label: 'Mi Perfil', icon: '👤' },
 ];
 
