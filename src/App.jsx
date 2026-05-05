@@ -362,6 +362,7 @@ const Dashboard = ({ user, onLogout }) => {
   }, [data, activeTab, searchTerm, MiembrosFilter, anunciosFilter, actasFilter, cantosFilter]);
 
   const fetchData = async () => {
+    if (activeTab === 'Tienda') return; // Tienda se auto-gestiona
     setLoading(true);
     try {
       let endpoint = '';
