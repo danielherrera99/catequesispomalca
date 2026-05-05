@@ -381,10 +381,12 @@ const Dashboard = ({ user, onLogout }) => {
           api.get('/asistencia'),
           api.get('/Miembros?todos=true')
         ]);
-        setData({
+        const fullData = {
           asistencias: asisRes.data.asistencias || [],
           Miembros: herRes.data.Miembros || []
-        });
+        };
+        setData(fullData);
+        window.MiembrosData = fullData.Miembros;
         setLoading(false);
         return;
       }
@@ -401,12 +403,14 @@ const Dashboard = ({ user, onLogout }) => {
           api.get('/eventos'),
           api.get('/asistencia')
         ]);
-        setData({
+        const fullData = {
           Miembros: MiembrosRes.data.Miembros || [],
           anuncios: anunciosRes.data.anuncios || [],
           eventos: eventosRes.data.eventos || [],
           asistencias: asisRes.data.asistencias || []
-        });
+        };
+        setData(fullData);
+        window.MiembrosData = fullData.Miembros;
         setLoading(false);
         return;
       }
@@ -430,6 +434,7 @@ const Dashboard = ({ user, onLogout }) => {
         // Map the responses correctly based on typical properties
         const resData = response.data;
         setData(resData.usuario || resData.conversaciones || resData.items || resData.galeria || resData.asistencias || resData.Miembros || resData.anuncios || resData.eventos || resData.servicios || resData.peticiones || resData.temas || resData.actas || resData.documentos || resData.fotos || resData.cantos || (Array.isArray(resData) ? resData : []));
+        if (resData.Miembros) window.MiembrosData = resData.Miembros;
       } else {
         setData([]); // Modulo sin endpoint programado aún
       }

@@ -114,39 +114,77 @@ const AsistenciaView = ({
               </div>
             </div>
             
-            <div style={{ display: 'grid', gap: '0.8rem', gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))' }}>
-              {(groupedAsistencias[selectedAsistenciaDate.year]?.[selectedAsistenciaDate.month]?.[selectedAsistenciaDate.date] || []).map((item, index) => (
-                <div key={item._id || index} style={{ 
-                  background: 'var(--surface)', 
-                  padding: '0.6rem 0.8rem', 
-                  borderRadius: '6px', 
-                  border: '1px solid var(--border)', 
-                  borderLeft: `4px solid ${
-                    item.estado === 'falta' ? '#F44336' : 
-                    item.estado === 'permiso' ? '#F59E0B' : 
-                    item.estado === 'tardanza' ? '#6366F1' : 
-                    '#10B981'
-                  }`, 
-                  display: 'flex', 
-                  flexDirection: 'column', 
-                  gap: '0.3rem' 
-                }}>
-                  <h3 style={{ margin: 0, fontSize: '0.95rem', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                    {item.usuario ? `${item.usuario.nombre} ${item.usuario.apellido}` : (item.nombreInvitado ? `👤 ${item.nombreInvitado}` : 'Usuario Desconocido')}
-                  </h3>
-                  <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', display: 'flex', justifyContent: 'space-between' }}>
-                    <span style={{ 
-                      fontWeight: 'bold', 
-                      color: item.estado === 'falta' ? '#F44336' : 
-                             item.estado === 'permiso' ? '#F59E0B' : 
-                             item.estado === 'tardanza' ? '#6366F1' : 
-                             '#10B981'
-                    }}>
-                      {(item.estado || 'Presente').toUpperCase()}
-                    </span>
+            <div style={{ display: 'grid', gap: '0.8rem', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))' }}>
+              {(() => {
+                const dayRecords = groupedAsistencias[selectedAsistenciaDate.year]?.[selectedAsistenciaDate.month]?.[selectedAsistenciaDate.date] || [];
+                const allPresentes = [];
+
+                dayRecords.forEach(record => {
+                  if (record.presentes && record.presentes.length > 0) {
+                    // Si es un registro de sesión (formato nuevo)
+                    record.presentes.forEach(p => {
+                      let nombre = 'Usuario Desconocido';
+                      if (p.miembroId) {
+                        const m = (window.MiembrosData || []).find(u => u._id === p.miembroId);
+                        if (m) nombre = `${m.nombre} ${m.apellido}`;
+                      } else if (p.nombreInvitado) {
+                        nombre = `👤 ${p.nombreInvitado}`;
+                      }
+                      allPresentes.push({ ...p, nombreMostrar: nombre, tipoReunion: record.tipoReunion });
+                    });
+                  } else {
+                    // Si es un registro individual (formato antiguo)
+                    let nombre = record.usuario ? `${record.usuario.nombre} ${record.usuario.apellido}` : (record.nombreInvitado ? `👤 ${record.nombreInvitado}` : 'Usuario Desconocido');
+                    allPresentes.push({ ...record, nombreMostrar: nombre });
+                  }
+                });
+
+                return allPresentes.map((item, index) => (
+                  <div key={index} style={{ 
+                    background: 'white', 
+                    padding: '1rem', 
+                    borderRadius: '12px', 
+                    border: '1px solid var(--border)', 
+                    borderLeft: `5px solid ${
+                      item.estado === 'falta' ? '#F44336' : 
+                      item.estado === 'permiso' ? '#F59E0B' : 
+                      item.estado === 'tardanza' ? '#6366F1' : 
+                      '#10B981'
+                    }`, 
+                    boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
+                    display: 'flex', 
+                    flexDirection: 'column', 
+                    gap: '0.4rem' 
+                  }}>
+                    <h3 style={{ margin: 0, fontSize: '0.95rem', color: 'var(--text-main)', fontWeight: 'bold' }}>
+                      {item.nombreMostrar}
+                    </h3>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '5px' }}>
+                      <span style={{ 
+                        fontSize: '0.7rem',
+                        fontWeight: 'bold', 
+                        padding: '2px 8px',
+                        borderRadius: '6px',
+                        background: item.estado === 'falta' ? '#FEF2F2' : 
+                                   item.estado === 'permiso' ? '#FFFBEB' : 
+                                   item.estado === 'tardanza' ? '#EEF2FF' : 
+                                   '#ECFDF5',
+                        color: item.estado === 'falta' ? '#F44336' : 
+                               item.estado === 'permiso' ? '#F59E0B' : 
+                               item.estado === 'tardanza' ? '#6366F1' : 
+                               '#10B981'
+                      }}>
+                        {(item.estado || 'Presente').toUpperCase()}
+                      </span>
+                      {item.tipoReunion && (
+                        <span style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>
+                          🏷️ {item.tipoReunion}
+                        </span>
+                      )}
+                    </div>
                   </div>
-                </div>
-              ))}
+                ));
+              })()}
             </div>
           </div>
         )}
