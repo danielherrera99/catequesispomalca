@@ -65,7 +65,7 @@ const TiendaView = ({ formatSafeDate }) => {
             return `${fecha};${t.tipo.toUpperCase()};${t.monto};"${t.descripcion}";"${t.categoria}";"${t.usuario?.nombre} ${t.usuario?.apellido}"`;
         }).join("\n");
 
-        const blob = new Blob(["sep=;\n\uFEFF" + header + rows], { type: 'text/csv;charset=utf-8;' });
+        const blob = new Blob(["\uFEFF" + "sep=;\n" + header + rows], { type: 'text/csv;charset=utf-8;' });
         const url = URL.createObjectURL(blob);
         const link = document.createElement('a');
         link.href = url;
