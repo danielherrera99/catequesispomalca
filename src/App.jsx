@@ -42,6 +42,7 @@ import WebConfigView from './components/views/WebConfigView';
 import ParroquiaConfigView from './components/views/ParroquiaConfigView';
 import MisMensajesView from './components/views/MisMensajesView';
 import MensajesAdminView from './components/views/MensajesAdminView';
+import TiendaView from './components/views/TiendaView';
 import ItemReadModal from './components/ItemReadModal';
 import { format, parseISO } from 'date-fns';
 import { es } from 'date-fns/locale';
@@ -205,6 +206,7 @@ const modules = [
   { id: 'Comunicacion', label: 'Comunicación', icon: '📢' },
   { id: 'WebConfig', label: 'Web Institucional', icon: '🌐' },
   {id: 'ParroquiaConfig', label: 'Configuración Parroquia', icon: '☦️'},
+  { id: 'Tienda', label: 'Tienda (Economía)', icon: '🏪' },
   { id: 'Perfil', label: 'Mi Perfil', icon: '👤' },
 ];
 
@@ -390,6 +392,7 @@ const Dashboard = ({ user, onLogout }) => {
       else if (activeTab === 'Mensajes') endpoint = '/mensajes/admin/todas';
       else if (activeTab === 'Perfil') endpoint = '/auth/perfil';
       else if (activeTab === 'Chat') endpoint = '/mensajes/conversaciones';
+      else if (activeTab === 'Tienda') endpoint = '/tienda';
       else if (activeTab === 'Dashboard') {
         const [MiembrosRes, anunciosRes, eventosRes, asisRes] = await Promise.all([
           api.get('/Miembros?todos=true'),
@@ -1029,6 +1032,7 @@ const Dashboard = ({ user, onLogout }) => {
       case 'Perfil': return <PerfilView data={data} loading={loading} ActivityIndicator={ActivityIndicator} SafeImage={SafeImage} isProfileEditing={isProfileEditing} setIsProfileEditing={setIsProfileEditing} profileData={profileData} setProfileData={setProfileData} handleUpdatePerfil={handleUpdatePerfil} getSafeDateForInput={getSafeDateForInput} formatSafeDate={formatSafeDate} />;
       case 'WebConfig': return <WebConfigView loading={loading} setLoading={setLoading} />;
       case 'ParroquiaConfig': return <ParroquiaConfigView loading={loading} setLoading={setLoading} />;
+      case 'Tienda': return <TiendaView loading={loading} setLoading={setLoading} formatSafeDate={formatSafeDate} />;
       case 'Comunicacion': return <ComunicacionView loading={loading} setLoading={setLoading} Miembros={data.Miembros || []} />;
       case 'Mensajes': return <MensajesAdminView loading={loading} ActivityIndicator={ActivityIndicator} data={data} openChatAdmin={openChatAdmin} formatSafeDate={formatSafeDate} />;
       case 'Espiritu': return <EspirituList filteredData={filteredData} espirituTab={espirituTab} setEspirituTab={setEspirituTab} openEditModal={openEditModal} handleDelete={handleDelete} />;
