@@ -1,0 +1,14 @@
+  const renderAnuncios = () => {
+  const renderActas = () => {
+  const renderEventos = () => {
+  const renderFormacion = () => {
+  const renderCantos = () => {
+  const renderServicios = () => {
+  const renderPeticiones = () => {
+  const renderPerfil = () => {
+  const renderMapa = () => {
+  const renderMisMensajes = () => {
+  const renderMensajes = () => {
+  const renderGaleria = () => {
+  const renderEspiritu = () => {
+  const renderDocumentos = () => {
