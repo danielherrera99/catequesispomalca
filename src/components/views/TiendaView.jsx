@@ -26,13 +26,23 @@ const TiendaView = ({ loading, setLoading, formatSafeDate }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
         try {
-            await api.post('/tienda', newTrans);
-            setIsModalOpen(false);
-            setNewTrans({ tipo: 'ingreso', monto: '', descripcion: '', categoria: 'General', fecha: new Date().toISOString().split('T')[0] });
-            fetchData();
+            const payload = {
+                ...newTrans,
+                monto: parseFloat(newTrans.monto)
+            };
+            const res = await api.post('/tienda', payload);
+            if (res.data.success) {
+                setIsModalOpen(false);
+                setNewTrans({ tipo: 'ingreso', monto: '', descripcion: '', categoria: 'General', fecha: new Date().toISOString().split('T')[0] });
+                await fetchData();
+            }
         } catch (err) {
-            alert('Error al registrar transacción');
+            console.error(err);
+            alert('Error al registrar transacción: ' + (err.response?.data?.message || err.message));
+        } finally {
+            setLoading(false);
         }
     };
 

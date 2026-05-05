@@ -119,20 +119,7 @@ const MiembrosEditModal = ({ selectedItem, setSelectedItem }) => {
         </div>
       </div>
 
-      <div className="input-group">
-        <label>Etapa de Formación</label>
-        <select 
-          className="form-select" 
-          style={{ padding: '0.8rem', borderRadius: '8px', border: '1px solid var(--border)', width: '100%' }} 
-          value={selectedItem.etapaFormacion || 'aspirante'} 
-          onChange={e => setSelectedItem({...selectedItem, etapaFormacion: e.target.value})}
-        >
-          <option value="aspirante">Aspirante</option>
-          <option value="iniciado">Iniciado</option>
-          <option value="en_formacion">En Formación</option>
-          <option value="promesado">Promesado</option>
-        </select>
-      </div>
+      {/* Etapa de Formación eliminada */}
 
       <div className="input-group" style={{ flexDirection: 'row', alignItems: 'center', gap: '0.5rem', marginTop: '1rem' }}>
         <input 

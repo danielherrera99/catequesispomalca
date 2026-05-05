@@ -683,6 +683,14 @@ const Dashboard = ({ user, onLogout }) => {
         setNewItem({ titulo: '', contenido: '', tipo: 'oracion' });
         fetchData();
         return;
+      } else if (activeTab === 'Tienda') {
+        endpoint = '/tienda';
+        payload = { 
+          ...newItem, 
+          monto: parseFloat(newItem.monto),
+          tipo: newItem.tipo || 'ingreso',
+          fecha: newItem.fecha || new Date().toISOString().split('T')[0]
+        };
       } else if (activeTab === 'Galeria') {
         const formData = new FormData();
         formData.append('titulo', newItem.titulo || '');
@@ -841,7 +849,6 @@ const Dashboard = ({ user, onLogout }) => {
           nombreContactoEmergencia: selectedItem.nombreContactoEmergencia,
           rol: selectedItem.rol,
           cargo: selectedItem.cargo,
-          etapaFormacion: selectedItem.etapaFormacion,
           activo: selectedItem.activo,
           email: selectedItem.email,
           password: selectedItem.password
@@ -1289,6 +1296,28 @@ const Dashboard = ({ user, onLogout }) => {
                   <ServiciosNewModal newItem={newItem} setNewItem={setNewItem} MapPicker={MapPicker} />
                 ) : activeTab === 'Eventos' ? (
                   <EventosNewModal newItem={newItem} setNewItem={setNewItem} MapPicker={MapPicker} />
+                ) : activeTab === 'Tienda' ? (
+                  <div className="input-group">
+                    <label>Tipo de Movimiento</label>
+                    <select value={newItem.tipo || 'ingreso'} onChange={e => setNewItem({...newItem, tipo: e.target.value})} required>
+                        <option value="ingreso">Ingreso (+)</option>
+                        <option value="egreso">Egreso (-)</option>
+                    </select>
+                    <label style={{ marginTop: '1rem' }}>Monto (S/)</label>
+                    <input type="number" step="0.01" value={newItem.monto || ''} onChange={e => setNewItem({...newItem, monto: e.target.value})} required placeholder="0.00" />
+                    <label style={{ marginTop: '1rem' }}>Descripción</label>
+                    <input type="text" value={newItem.descripcion || ''} onChange={e => setNewItem({...newItem, descripcion: e.target.value})} required placeholder="Ej: Venta de manuales" />
+                    <label style={{ marginTop: '1rem' }}>Categoría</label>
+                    <select value={newItem.categoria || 'General'} onChange={e => setNewItem({...newItem, categoria: e.target.value})}>
+                        <option value="General">General</option>
+                        <option value="Materiales">Materiales</option>
+                        <option value="Eventos">Eventos</option>
+                        <option value="Donaciones">Donaciones</option>
+                        <option value="Limpieza">Limpieza/Local</option>
+                    </select>
+                    <label style={{ marginTop: '1rem' }}>Fecha</label>
+                    <input type="date" value={newItem.fecha || new Date().toISOString().split('T')[0]} onChange={e => setNewItem({...newItem, fecha: e.target.value})} required />
+                  </div>
                 ) : (
                   <div className="input-group">
                     <label>Título Principal</label>

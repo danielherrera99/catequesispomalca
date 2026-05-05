@@ -30,9 +30,9 @@ const PerfilView = ({
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '1rem' }}>
             <div>
               <h1 style={{ fontSize: '2.2rem', margin: 0, color: 'var(--text-main)' }}>{user.nombre} {user.apellido}</h1>
-              <p style={{ fontSize: '1.1rem', color: 'var(--primary)', fontWeight: 'bold', textTransform: 'uppercase', marginTop: '4px' }}>🛡️ {user.cargo || 'Miembro de Comunidad'}</p>
+              <p style={{ fontSize: '1.1rem', color: 'var(--primary)', fontWeight: 'bold', textTransform: 'uppercase', marginTop: '4px' }}>🛡️ {user.cargo || 'Miembro de la Catequesis'}</p>
               <span style={{ fontSize: '0.85rem', background: '#E0E7FF', color: '#3730A3', padding: '4px 12px', borderRadius: '20px', fontWeight: 'bold', marginTop: '10px', display: 'inline-block' }}>
-                 {user.etapaFormacion ? user.etapaFormacion.toUpperCase() : 'Catequesis Pomalca'}
+                 CATEQUESIS POMALCA
               </span>
             </div>
             <button 
@@ -130,7 +130,7 @@ const PerfilView = ({
                    ) : (
                      <div style={{ width: '180px', height: '180px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#f5f5f5', marginBottom: '1rem' }}><ActivityIndicator /></div>
                    )}
-                   <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Usa este QR para marcar asistencia en reuniones de Comunidad.</p>
+                   <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Usa este QR para marcar asistencia en reuniones de la Catequesis.</p>
                    <button onClick={() => { const link = document.createElement('a'); link.href = user.codigoQR; link.download = `QR_${user.nombre}.png`; link.click(); }} style={{ marginTop: '1rem', background: 'none', border: '1px solid var(--primary)', color: 'var(--primary)', padding: '6px 15px', borderRadius: '8px', cursor: 'pointer', fontWeight: 'bold' }}>📥 Descargar mi QR</button>
                 </div>
               </>
