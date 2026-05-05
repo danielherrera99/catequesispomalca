@@ -1051,7 +1051,25 @@ const Dashboard = ({ user, onLogout }) => {
       case 'Mapa': return <MapaView data={data} loading={loading} ActivityIndicator={ActivityIndicator} setReadItem={setReadItem} setActiveTab={setActiveTab} />;
       case 'Dashboard': return <DashboardView loading={loading} data={data} user={user} formatSafeDate={formatSafeDate} setActiveTab={setActiveTab} handleApprove={handleApprove} ActivityIndicator={ActivityIndicator} />;
       case 'Chat':
-        return renderMisMensajes();
+        return (
+          <MisMensajesView 
+            loading={loading} 
+            ActivityIndicator={ActivityIndicator} 
+            data={data.conversaciones || []} 
+            showSearchChat={showSearchChat} 
+            setShowSearchChat={setShowSearchChat} 
+            openChatPersonal={openChatPersonal} 
+            SafeImage={SafeImage} 
+            activeChat={activeChat} 
+            user={user} 
+            formatSafeDate={formatSafeDate} 
+            chatLoading={chatLoading} 
+            chatMessages={chatMessages} 
+            handleSendChat={handleSendChat} 
+            nuevoMensaje={nuevoMensaje} 
+            setNuevoMensaje={setNuevoMensaje} 
+          />
+        );
       case 'Perfil': return <PerfilView data={data} loading={loading} ActivityIndicator={ActivityIndicator} SafeImage={SafeImage} isProfileEditing={isProfileEditing} setIsProfileEditing={setIsProfileEditing} profileData={profileData} setProfileData={setProfileData} handleUpdatePerfil={handleUpdatePerfil} getSafeDateForInput={getSafeDateForInput} formatSafeDate={formatSafeDate} />;
       case 'WebConfig': return <WebConfigView loading={loading} setLoading={setLoading} />;
       case 'ParroquiaConfig': return <ParroquiaConfigView loading={loading} setLoading={setLoading} />;
