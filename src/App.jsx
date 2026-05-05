@@ -195,7 +195,7 @@ const modules = [
   { id: 'Eventos', label: 'Calendario (Eventos)', icon: '📅' },
   { id: 'Servicios', label: 'Servicios', icon: '💼' },
   { id: 'Peticiones', label: 'Peticiones', icon: '🙏' },
-  { id: 'Formacion', label: 'Crecimiento Catequético', icon: '📖' },
+  { id: 'Formacion', label: 'Formación', icon: '📖' },
   { id: 'Actas', label: 'Actas', icon: '📝' },
   { id: 'Documentos', label: 'Documentos', icon: '📄' },
   { id: 'Galeria', label: 'Galería', icon: '🖼️' },
