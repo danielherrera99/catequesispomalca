@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
-import { BrowserRouter, Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
+import { HashRouter, Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
 import api from './config/api';
 import Consejo from './components/Consejo';
 import MiembrosEditModal from './components/MiembrosEditModal';
@@ -1557,7 +1557,7 @@ function App() {
   };
 
   return (
-    <BrowserRouter>
+    <HashRouter>
       <ErrorBoundary>
         <Routes>
           {/* Cara Pública */}
@@ -1572,7 +1572,7 @@ function App() {
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </ErrorBoundary>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
