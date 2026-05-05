@@ -1040,7 +1040,7 @@ const Dashboard = ({ user, onLogout }) => {
       case 'Perfil': return <PerfilView data={data} loading={loading} ActivityIndicator={ActivityIndicator} SafeImage={SafeImage} isProfileEditing={isProfileEditing} setIsProfileEditing={setIsProfileEditing} profileData={profileData} setProfileData={setProfileData} handleUpdatePerfil={handleUpdatePerfil} getSafeDateForInput={getSafeDateForInput} formatSafeDate={formatSafeDate} />;
       case 'WebConfig': return <WebConfigView loading={loading} setLoading={setLoading} />;
       case 'ParroquiaConfig': return <ParroquiaConfigView loading={loading} setLoading={setLoading} />;
-      case 'Tienda': return <TiendaView loading={loading} setLoading={setLoading} formatSafeDate={formatSafeDate} />;
+      case 'Tienda': return <TiendaView formatSafeDate={formatSafeDate} />;
       case 'Comunicacion': return <ComunicacionView loading={loading} setLoading={setLoading} Miembros={data.Miembros || []} />;
       case 'Mensajes': return <MensajesAdminView loading={loading} ActivityIndicator={ActivityIndicator} data={data} openChatAdmin={openChatAdmin} formatSafeDate={formatSafeDate} />;
       case 'Espiritu': return <EspirituList filteredData={filteredData} espirituTab={espirituTab} setEspirituTab={setEspirituTab} openEditModal={openEditModal} handleDelete={handleDelete} />;
@@ -1408,7 +1408,6 @@ const Dashboard = ({ user, onLogout }) => {
           <div className="modal-overlay" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(5px)' }}>
             <div className="glass-card animate-fade" style={{ maxWidth: '700px', width: '90%', maxHeight: '90vh', display: 'flex', flexDirection: 'column', padding: '2.5rem' }}>
                <h2 style={{ color: 'var(--primary)', marginBottom: '1rem' }}>Registro de Asistencia Manual</h2>
-               
                <div style={{ display: 'flex', gap: '1rem', marginBottom: '2rem' }}>
                   <div className="input-group" style={{ flex: 1 }}>
                      <label>Fecha de la Reunión</label>

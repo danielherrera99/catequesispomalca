@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import api from '../../config/api';
 
-const TiendaView = ({ loading, setLoading, formatSafeDate }) => {
+const TiendaView = ({ formatSafeDate }) => {
     const [data, setData] = useState({ transacciones: [], resumen: { ingresos: 0, egresos: 0, balance: 0 } });
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [newTrans, setNewTrans] = useState({ tipo: 'ingreso', monto: '', descripcion: '', categoria: 'General', fecha: new Date().toISOString().split('T')[0] });
 
     const fetchData = async () => {
@@ -73,7 +74,12 @@ const TiendaView = ({ loading, setLoading, formatSafeDate }) => {
     };
 
     return (
-        <div className="animate-fade">
+        <div className="animate-fade" style={{ position: 'relative' }}>
+            {loading && (
+                <div style={{ position: 'absolute', top: '-10px', right: '0', background: 'var(--primary)', color: 'white', padding: '5px 15px', borderRadius: '20px', fontSize: '0.8rem', zIndex: 10, boxShadow: '0 4px 10px rgba(0,0,0,0.2)' }}>
+                    ⏳ Actualizando datos...
+                </div>
+            )}
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
                 <div>
                     <h2 className="section-title" style={{ textAlign: 'left', margin: 0 }}>Gestión de Tienda</h2>
