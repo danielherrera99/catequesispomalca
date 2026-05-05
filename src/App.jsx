@@ -769,7 +769,6 @@ const Dashboard = ({ user, onLogout }) => {
       let asistenciasToExport = sourceData;
       
       if (exportDates.start && exportDates.end) {
-        // Asegurar que abarque todo el día ajustando la hora local
         const startT = new Date(`${exportDates.start}T00:00:00`).getTime();
         const endT = new Date(`${exportDates.end}T23:59:59`).getTime();
         
@@ -788,21 +787,32 @@ const Dashboard = ({ user, onLogout }) => {
         return;
       }
 
-      // Convertir a CSV nativo con separador de punto y coma (;) para que Excel en Español lo divida en columnas correctamente
       const header = "Fecha;Miembro;Tipo Reunión;Estado;Método;Observaciones\n";
       const rows = asistenciasToExport.map(a => {
         const fechaFull = a.fecha ? new Date(a.fecha) : new Date();
         const fechaStr = fechaFull.toLocaleDateString('es-ES');
-        const Miembro = a.usuario ? `${a.usuario.nombre} ${a.usuario.apellido}` : (a.nombreInvitado ? `Invitado: ${a.nombreInvitado}` : 'Usuario Desconocido');
+        
+        // Búsqueda robusta del nombre del miembro
+        let nombreMiembro = 'Usuario Desconocido';
+        if (a.usuario) {
+          nombreMiembro = `${a.usuario.nombre} ${a.usuario.apellido}`;
+        } else if (a.miembroId) {
+          const encontrado = (data.Miembros || []).find(m => m._id === a.miembroId);
+          if (encontrado) nombreMiembro = `${encontrado.nombre} ${encontrado.apellido}`;
+        } else if (a.nombreInvitado) {
+          nombreMiembro = `Invitado: ${a.nombreInvitado}`;
+        }
+
         const tipo = a.tipoReunion || 'semanal';
         const estado = a.estado ? (a.estado.charAt(0).toUpperCase() + a.estado.slice(1)) : (a.presente ? 'Presente' : 'Falta');
         const metodo = a.metodoRegistro || 'qr';
         const obs = a.observaciones ? a.observaciones.replace(/;/g, '') : '';
-        return `${fechaStr};"${Miembro}";"${tipo}";"${estado}";"${metodo}";"${obs}"`;
+        return `${fechaStr};"${nombreMiembro}";"${tipo}";"${estado}";"${metodo}";"${obs}"`;
       }).join("\n");
 
-      // \uFEFF asegura que Excel lea los acentos (UTF-8 BOM), sep=; fuerza a dividir columnas
-      const blob = new Blob(["sep=;\n\uFEFF" + header + rows], { type: 'text/csv;charset=utf-8;' });
+      const BOM = new Uint8Array([0xEF, 0xBB, 0xBF]);
+      const content = "sep=;\n" + header + rows;
+      const blob = new Blob([BOM, content], { type: 'text/csv;charset=utf-8' });
       const url = URL.createObjectURL(blob);
       
       const fileNameStr = (exportDates.start && exportDates.end) 
@@ -817,7 +827,7 @@ const Dashboard = ({ user, onLogout }) => {
       link.remove();
       URL.revokeObjectURL(url);
       
-      setIsExportModalOpen(false); // Cerramos el modal
+      setIsExportModalOpen(false);
     } catch (error) {
       console.error(error);
       alert('Error al generar el reporte local.');
