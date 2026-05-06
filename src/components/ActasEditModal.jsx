@@ -27,12 +27,12 @@ const ActasEditModal = ({ selectedItem, setSelectedItem, getSafeDateForInput }) 
           <label>Tipo de Reunión</label>
           <select 
             className="form-select" 
-            value={selectedItem.tipoReunion || 'consejo'} 
+            value={selectedItem.tipoReunion || 'directiva'} 
             onChange={e => setSelectedItem({...selectedItem, tipoReunion: e.target.value})} 
             required
           >
-            <option value="consejo">Consejo</option>
-            <option value="Comunidad">Comunidad</option>
+            <option value="directiva">Directiva</option>
+            <option value="fraternidad">Fraternidad</option>
             <option value="formacion">Formación</option>
             <option value="extraordinaria">Extraordinaria</option>
           </select>

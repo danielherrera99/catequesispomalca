@@ -26,12 +26,12 @@ const ActasNewModal = ({ newItem, setNewItem }) => {
           <label>Tipo de Reunión</label>
           <select 
             className="form-select" 
-            value={newItem.tipoReunion || 'consejo'} 
+            value={newItem.tipoReunion || 'directiva'} 
             onChange={e => setNewItem({...newItem, tipoReunion: e.target.value})} 
             required
           >
-            <option value="consejo">Consejo</option>
-            <option value="Comunidad">Comunidad</option>
+            <option value="directiva">Directiva</option>
+            <option value="fraternidad">Fraternidad</option>
             <option value="formacion">Formación</option>
             <option value="extraordinaria">Extraordinaria</option>
           </select>

@@ -10,7 +10,7 @@ const ActasList = ({ filteredData, getActaColor, formatSafeDate, setReadItem, op
           <div style={{ padding: '1.5rem', flex: 1 }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1rem' }}>
               <span style={{ fontSize: '0.75rem', fontWeight: 'bold', textTransform: 'uppercase', color: getActaColor(item.tipoReunion), backgroundColor: `${getActaColor(item.tipoReunion)}15`, padding: '4px 10px', borderRadius: '12px' }}>
-                {item.tipoReunion || 'General'}
+                {item.tipoReunion === 'directiva' ? 'Directiva' : (item.tipoReunion === 'fraternidad' ? 'Fraternidad' : (item.tipoReunion || 'General'))}
               </span>
               <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>
                 {formatSafeDate(item.fecha)}
