@@ -283,7 +283,7 @@ const Dashboard = ({ user, onLogout }) => {
 
   const getActaColor = (tipo) => {
     switch (tipo) {
-      case 'consejo': return '#0288D1';
+      case 'directiva': return '#0288D1';
       case 'fraternidad': return '#388E3C';
       case 'formacion': return '#F57C00';
       case 'extraordinaria': return '#D32F2F';
@@ -318,7 +318,7 @@ const Dashboard = ({ user, onLogout }) => {
       }
     } else if (activeTab === 'Actas') {
       if (actasFilter !== 'todas') {
-        filtered = filtered.filter(item => (item.tipoReunion || 'consejo') === actasFilter);
+        filtered = filtered.filter(item => (item.tipoReunion || 'directiva') === actasFilter);
       }
     } else if (activeTab === 'Cantos') {
       if (cantosFilter !== 'todos') {
@@ -647,7 +647,7 @@ const Dashboard = ({ user, onLogout }) => {
         payload = { 
           titulo: newItem.titulo, 
           contenido: newItem.contenido, 
-          tipoReunion: newItem.tipoReunion || 'consejo',
+          tipoReunion: newItem.tipoReunion || 'directiva',
           fecha: newItem.fecha ? new Date(newItem.fecha).toISOString() : new Date().toISOString(),
           acuerdos: parsedAcuerdos
         };
@@ -1271,7 +1271,7 @@ const Dashboard = ({ user, onLogout }) => {
 
         {activeTab === 'Actas' && (
           <div style={{ display: 'flex', gap: '1rem', marginTop: '1.5rem', overflowX: 'auto', paddingBottom: '0.5rem' }}>
-            {[{ id: 'todas', label: 'Todas las Actas', bg: 'var(--surface)' }, { id: 'consejo', label: 'Consejo', bg: '#0288D115', border: '#0288D1' }, { id: 'fraternidad', label: 'Fraternidad', bg: '#388E3C15', border: '#388E3C' }, { id: 'formacion', label: 'Formación', bg: '#F57C0015', border: '#F57C00' }, { id: 'extraordinaria', label: 'Extraordinarias', bg: '#D32F2F15', border: '#D32F2F' }].map(filtro => (
+            {[{ id: 'todas', label: 'Todas las Actas', bg: 'var(--surface)' }, { id: 'directiva', label: 'Directiva', bg: '#0288D115', border: '#0288D1' }, { id: 'fraternidad', label: 'Fraternidad', bg: '#388E3C15', border: '#388E3C' }, { id: 'formacion', label: 'Formación', bg: '#F57C0015', border: '#F57C00' }, { id: 'extraordinaria', label: 'Extraordinarias', bg: '#D32F2F15', border: '#D32F2F' }].map(filtro => (
               <button
                 key={filtro.id}
                 className={`btn ${actasFilter === filtro.id ? 'btn-primary' : ''}`}
