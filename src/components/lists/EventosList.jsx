@@ -22,7 +22,7 @@ const getColorEvento = (tipo) => {
   }
 };
 
-const EventosList = ({ filteredData, setReadItem, openEditModal, handleDelete }) => {
+const EventosList = ({ filteredData, setReadItem, openEditModal, handleDelete, formatSafeDate }) => {
   if (filteredData.length === 0) return <div className="glass-card animate-fade" style={{ padding: '3rem', textAlign: 'center', color: 'var(--text-muted)' }}>No hay eventos próximos registrados en tu calendario. 📅</div>;
 
   return (
@@ -43,7 +43,7 @@ const EventosList = ({ filteredData, setReadItem, openEditModal, handleDelete })
             <p style={{ fontSize: '0.95rem', color: 'var(--text-main)', marginBottom: '0.5rem', fontWeight: 'bold' }}>📍 {item.lugar || 'Sede Catequesis Pomalca'}</p>
             <p style={{ fontSize: '0.95rem', color: 'var(--text-muted)', display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden', flex: 1, fontStyle: 'italic' }}>{item.descripcion}</p>
             <div style={{ fontSize: '1.1rem', marginTop: '1rem', padding: '0.8rem', background: 'var(--surface)', borderRadius: '8px', color: 'var(--primary)', fontWeight: 'bold', textAlign: 'center', border: '1px solid var(--border)' }}>
-               📅 {item.fecha ? new Date(item.fecha).toLocaleDateString('es-ES', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }).toUpperCase() : 'Sin fecha'}
+               📅 {formatSafeDate ? formatSafeDate(item.fecha, 'PPPP') : 'Sin fecha'}
             </div>
           </div>
           

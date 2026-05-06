@@ -124,17 +124,31 @@ const AsistenciaView = ({
                     // Si es un registro de sesión (formato nuevo)
                     record.presentes.forEach(p => {
                       let nombre = 'Usuario Desconocido';
-                      if (p.miembroId) {
-                        const m = (window.MiembrosData || []).find(u => u._id === p.miembroId);
+                      const mId = p.miembroId || p.usuarioId || p.Miembro;
+                      if (mId) {
+                        const m = (window.MiembrosData || []).find(u => u._id === (mId?._id || mId));
                         if (m) nombre = `${m.nombre} ${m.apellido}`;
+                        else if (mId?.nombre) nombre = `${mId.nombre} ${mId.apellido}`;
                       } else if (p.nombreInvitado) {
                         nombre = `👤 ${p.nombreInvitado}`;
                       }
                       allPresentes.push({ ...p, nombreMostrar: nombre, tipoReunion: record.tipoReunion });
                     });
                   } else {
-                    // Si es un registro individual (formato antiguo)
-                    let nombre = record.usuario ? `${record.usuario.nombre} ${record.usuario.apellido}` : (record.nombreInvitado ? `👤 ${record.nombreInvitado}` : 'Usuario Desconocido');
+                    // Si es un registro individual (formato estandar)
+                    const m = record.Miembro || record.usuario;
+                    let nombre = 'Usuario Desconocido';
+                    
+                    if (m && typeof m === 'object') {
+                      nombre = `${m.nombre} ${m.apellido}`;
+                    } else if (record.nombreInvitado) {
+                      nombre = `👤 ${record.nombreInvitado}`;
+                    } else if (m && typeof m === 'string') {
+                      // Si solo viene el ID, buscar en MiembrosData
+                      const encontrado = (window.MiembrosData || []).find(u => u._id === m);
+                      if (encontrado) nombre = `${encontrado.nombre} ${encontrado.apellido}`;
+                    }
+                    
                     allPresentes.push({ ...record, nombreMostrar: nombre });
                   }
                 });

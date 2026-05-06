@@ -126,9 +126,8 @@ import './App.css';
 const getSafeDateForInput = (dateStr) => {
   if (!dateStr) return '';
   try {
-    const d = new Date(dateStr);
-    if (isNaN(d.getTime())) return '';
-    return d.toISOString().split('T')[0];
+    // Retornamos solo la parte YYYY-MM-DD para evitar desfases de zona horaria en el input
+    return dateStr.split('T')[0];
   } catch (e) {
     return '';
   }
@@ -256,7 +255,9 @@ const Dashboard = ({ user, onLogout }) => {
     try {
       let parsed;
       if (typeof dateStr === 'string') {
-        parsed = dateStr.includes('T') ? parseISO(dateStr) : new Date(dateStr);
+        // Extraemos componentes para evitar desfase de zona horaria (mostrar un día antes)
+        const [year, month, day] = dateStr.split('T')[0].split('-').map(Number);
+        parsed = new Date(year, month - 1, day, 12, 0, 0);
       } else if (dateStr instanceof Date) {
         parsed = dateStr;
       } else {
@@ -799,10 +800,12 @@ const Dashboard = ({ user, onLogout }) => {
         
         // Búsqueda robusta del nombre del miembro
         let nombreMiembro = 'Usuario Desconocido';
-        if (a.usuario) {
-          nombreMiembro = `${a.usuario.nombre} ${a.usuario.apellido}`;
-        } else if (a.miembroId) {
-          const encontrado = (data.Miembros || []).find(m => m._id === a.miembroId);
+        const m = a.Miembro || a.usuario;
+        if (m && typeof m === 'object') {
+          nombreMiembro = `${m.nombre} ${m.apellido}`;
+        } else if (a.miembroId || (m && typeof m === 'string')) {
+          const mId = a.miembroId || m;
+          const encontrado = (window.MiembrosData || []).find(me => me._id === mId);
           if (encontrado) nombreMiembro = `${encontrado.nombre} ${encontrado.apellido}`;
         } else if (a.nombreInvitado) {
           nombreMiembro = `Invitado: ${a.nombreInvitado}`;
@@ -997,7 +1000,10 @@ const Dashboard = ({ user, onLogout }) => {
 
   const groupedAsistencias = activeTab === 'Asistencia' ? filteredData.reduce((acc, item) => {
     if (!item || !item.fecha) return acc;
-    const rawDate = new Date(item.fecha);
+    // Fix: Parse as local date at noon to avoid UTC shift
+    const [yearNum, monthNum, dayNum] = item.fecha.split('T')[0].split('-').map(Number);
+    const rawDate = new Date(yearNum, monthNum - 1, dayNum, 12, 0, 0);
+    
     if (isNaN(rawDate.getTime())) return acc;
     
     const year = rawDate.getFullYear().toString();
@@ -1040,7 +1046,7 @@ const Dashboard = ({ user, onLogout }) => {
     switch (activeTab) {
       case 'Asistencia': return <AsistenciaView groupedAsistencias={groupedAsistencias} expandedArchivos={expandedArchivos} toggleArchivo={toggleArchivo} selectedAsistenciaDate={selectedAsistenciaDate} setSelectedAsistenciaDate={setSelectedAsistenciaDate} />;
       case 'Anuncios': return <AnunciosList filteredData={filteredData} setReadItem={setReadItem} getTipoIcon={getTipoIcon} SafeImage={SafeImage} openEditModal={openEditModal} handleDelete={handleDelete} />;
-      case 'Eventos': return <EventosList filteredData={filteredData} setReadItem={setReadItem} openEditModal={openEditModal} handleDelete={handleDelete} />;
+      case 'Eventos': return <EventosList filteredData={filteredData} setReadItem={setReadItem} openEditModal={openEditModal} handleDelete={handleDelete} formatSafeDate={formatSafeDate} />;
       case 'Servicios': return <ServiciosList filteredData={filteredData} setReadItem={setReadItem} openEditModal={openEditModal} handleDelete={handleDelete} handleParticipar={handleParticipar} />;
       case 'Peticiones': return <PeticionesList filteredData={filteredData} handleOrar={handleOrar} openEditModal={openEditModal} handleDelete={handleDelete} />;
       case 'Formacion': return <FormacionList filteredData={filteredData} setReadItem={setReadItem} openEditModal={openEditModal} handleDelete={handleDelete} />;
