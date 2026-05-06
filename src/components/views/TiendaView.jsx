@@ -6,6 +6,7 @@ const TiendaView = ({ formatSafeDate }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [loading, setLoading] = useState(false);
     const [newTrans, setNewTrans] = useState({ tipo: 'ingreso', monto: '', descripcion: '', categoria: 'General', fecha: new Date().toISOString().split('T')[0] });
+    const [editingId, setEditingId] = useState(null);
 
     const fetchData = async () => {
         setLoading(true);
@@ -33,15 +34,20 @@ const TiendaView = ({ formatSafeDate }) => {
                 ...newTrans,
                 monto: parseFloat(newTrans.monto)
             };
-            const res = await api.post('/tienda', payload);
-            if (res.data.success) {
-                setIsModalOpen(false);
-                setNewTrans({ tipo: 'ingreso', monto: '', descripcion: '', categoria: 'General', fecha: new Date().toISOString().split('T')[0] });
-                await fetchData();
+            
+            if (editingId) {
+                await api.put(`/tienda/${editingId}`, payload);
+            } else {
+                await api.post('/tienda', payload);
             }
+
+            setIsModalOpen(false);
+            setEditingId(null);
+            setNewTrans({ tipo: 'ingreso', monto: '', descripcion: '', categoria: 'General', fecha: new Date().toISOString().split('T')[0] });
+            await fetchData();
         } catch (err) {
             console.error(err);
-            alert('Error al registrar transacción: ' + (err.response?.data?.message || err.message));
+            alert('Error al procesar transacción: ' + (err.response?.data?.message || err.message));
         } finally {
             setLoading(false);
         }
@@ -76,6 +82,18 @@ const TiendaView = ({ formatSafeDate }) => {
         URL.revokeObjectURL(url);
     };
 
+    const handleEdit = (t) => {
+        setEditingId(t._id);
+        setNewTrans({
+            tipo: t.tipo,
+            monto: t.monto.toString(),
+            descripcion: t.descripcion,
+            categoria: t.categoria || 'General',
+            fecha: t.fecha ? t.fecha.split('T')[0] : new Date().toISOString().split('T')[0]
+        });
+        setIsModalOpen(true);
+    };
+
     return (
         <div className="animate-fade" style={{ position: 'relative' }}>
             {loading && (
@@ -90,7 +108,7 @@ const TiendaView = ({ formatSafeDate }) => {
                 </div>
                 <div style={{ display: 'flex', gap: '1rem' }}>
                     <button className="btn btn-ghost" onClick={handleExport}>📊 Exportar Reporte</button>
-                    <button className="btn btn-primary" onClick={() => setIsModalOpen(true)}>➕ Nueva Transacción</button>
+                    <button className="btn btn-primary" onClick={() => { setEditingId(null); setNewTrans({ tipo: 'ingreso', monto: '', descripcion: '', categoria: 'General', fecha: new Date().toISOString().split('T')[0] }); setIsModalOpen(true); }}>➕ Nueva Transacción</button>
                 </div>
             </div>
 
@@ -146,7 +164,8 @@ const TiendaView = ({ formatSafeDate }) => {
                                     {t.tipo === 'ingreso' ? '+' : '-'} S/ {t.monto.toFixed(2)}
                                 </td>
                                 <td style={{ fontSize: '0.9rem' }}>{t.usuario?.nombre}</td>
-                                <td>
+                                <td style={{ display: 'flex', gap: '0.5rem' }}>
+                                    <button className="btn-icon" onClick={() => handleEdit(t)} title="Editar">✏️</button>
                                     <button className="btn-icon" onClick={() => handleDelete(t._id)} title="Eliminar">🗑️</button>
                                 </td>
                             </tr>
@@ -162,7 +181,7 @@ const TiendaView = ({ formatSafeDate }) => {
             {isModalOpen && (
                 <div className="modal-overlay">
                     <div className="modal-content animate-pop" style={{ maxWidth: '500px' }}>
-                        <h3>Registrar Movimiento</h3>
+                        <h3>{editingId ? 'Editar Movimiento' : 'Registrar Movimiento'}</h3>
                         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                             <div className="input-group">
                                 <label>Tipo de Movimiento</label>
