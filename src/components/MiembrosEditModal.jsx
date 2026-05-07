@@ -109,12 +109,12 @@ const MiembrosEditModal = ({ selectedItem, setSelectedItem }) => {
             onChange={e => setSelectedItem({...selectedItem, cargo: e.target.value})}
           >
             <option value="ninguno">Ninguno</option>
-            <option value="coordinador">Coordinador(a) / Ministro(a)</option>
-            <option value="vice-coordinador">Vice-Coordinador(a)</option>
-            <option value="secretario">Secretario(a)</option>
-            <option value="tesorero">Tesorero(a)</option>
-            <option value="formador">Formador(a)</option>
-            <option value="animador">Animador(a)</option>
+            <option value="coordinador">Coordinador</option>
+            <option value="subcoordinadora">Subcoordinadora</option>
+            <option value="secretario">Secretario</option>
+            <option value="tesorera">Tesorera</option>
+            <option value="pro tesorera">Pro tesorera</option>
+            <option value="delegado">Delegado</option>
           </select>
         </div>
       </div>

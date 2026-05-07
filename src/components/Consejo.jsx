@@ -15,11 +15,11 @@ const Consejo = ({ miembrosData }) => {
   // Ordenar por jerarquía
   const ordenCargos = {
     'coordinador': 1,
-    'vice-coordinador': 2,
+    'subcoordinadora': 2,
     'secretario': 3,
-    'tesorero': 4,
-    'formador': 5,
-    'animador': 6
+    'tesorera': 4,
+    'pro tesorera': 5,
+    'delegado': 6
   };
 
   const consejoSorted = [...miembros].sort((a, b) => (ordenCargos[a.cargo] || 99) - (ordenCargos[b.cargo] || 99));
