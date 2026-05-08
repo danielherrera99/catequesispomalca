@@ -24,20 +24,27 @@ const DashboardView = ({ loading, data, user, formatSafeDate, setActiveTab, hand
       asistencia: attendanceMap[date]
     })).slice(-7); // Últimas 7 fechas
 
-    // 2. Procesar Etapas de Formación
-    const stagesMap = {
-      'aspirante': { name: 'Aspirantes', value: 0, color: '#94A3B8' },
-      'iniciado': { name: 'Iniciados', value: 0, color: '#38BDF8' },
-      'en_formacion': { name: 'Formación', value: 0, color: '#818CF8' },
-      'promesado': { name: 'Promesados', value: 0, color: '#10B981' }
+    // 2. Procesar Distribución por Cargos
+    const positionsMap = {
+      'coordinador': { name: 'Coordinador', value: 0, color: '#38BDF8' },
+      'subcoordinadora': { name: 'Subcoordinadora', value: 0, color: '#818CF8' },
+      'secretario': { name: 'Secretario', value: 0, color: '#10B981' },
+      'tesorera': { name: 'Tesorera', value: 0, color: '#F59E0B' },
+      'pro tesorera': { name: 'Pro tesorera', value: 0, color: '#EC4899' },
+      'delegado': { name: 'Delegado', value: 0, color: '#8B5CF6' },
+      'ninguno': { name: 'Sin Cargo', value: 0, color: '#94A3B8' }
     };
 
     (data.Miembros || []).forEach(h => {
-      const etapa = h.etapaFormacion || 'aspirante';
-      if (stagesMap[etapa]) stagesMap[etapa].value++;
+      const cargo = (h.cargo || 'ninguno').toLowerCase();
+      if (positionsMap[cargo]) {
+        positionsMap[cargo].value++;
+      } else {
+        positionsMap['ninguno'].value++;
+      }
     });
 
-    const distribution = Object.values(stagesMap).filter(s => s.value > 0);
+    const distribution = Object.values(positionsMap).filter(s => s.value > 0);
 
     return { attendance, distribution };
   }, [data, formatSafeDate]);
@@ -125,7 +132,7 @@ const DashboardView = ({ loading, data, user, formatSafeDate, setActiveTab, hand
         {/* Gráfico de Distribución por Etapas */}
         <div className="glass-card" style={{ padding: '1.5rem', minHeight: '350px' }}>
           <h3 style={{ marginTop: 0, fontSize: '1.1rem', color: 'var(--primary)', marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '10px' }}>
-            🍩 Distribución por Etapas
+            🍩 Distribución por Cargos
           </h3>
           <div style={{ width: '100%', height: 250 }}>
             <ResponsiveContainer>
