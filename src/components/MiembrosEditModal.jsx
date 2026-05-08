@@ -119,34 +119,6 @@ const MiembrosEditModal = ({ selectedItem, setSelectedItem }) => {
         </div>
       </div>
 
-      {/* Etapa de Formación eliminada */}
-
-      <div style={{ marginTop: '1.5rem', padding: '1rem', background: '#F8FAFC', borderRadius: '12px', border: '1px solid #E2E8F0' }}>
-        <label style={{ fontWeight: 'bold', marginBottom: '0.8rem', display: 'block', color: 'var(--primary)' }}>📑 Requisitos Entregados</label>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.8rem' }}>
-          {[
-            { id: 'feBautismo', label: 'Fe de Bautismo' },
-            { id: 'dni', label: 'Copia de DNI' },
-            { id: 'constanciaComunion', label: 'Constancia Comunión' },
-            { id: 'fichaInscripcion', label: 'Ficha Inscripción' }
-          ].map(req => (
-            <div key={req.id} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <input 
-                type="checkbox"
-                id={req.id}
-                checked={selectedItem.requisitos?.[req.id] || false}
-                onChange={e => setSelectedItem({
-                  ...selectedItem, 
-                  requisitos: { ...selectedItem.requisitos, [req.id]: e.target.checked }
-                })}
-                style={{ width: 'auto', margin: 0 }}
-              />
-              <label htmlFor={req.id} style={{ margin: 0, fontSize: '0.85rem', cursor: 'pointer' }}>{req.label}</label>
-            </div>
-          ))}
-        </div>
-      </div>
-
       <div className="input-group" style={{ flexDirection: 'row', alignItems: 'center', gap: '0.5rem', marginTop: '1rem' }}>
         <input 
           type="checkbox" 

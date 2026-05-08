@@ -71,18 +71,9 @@ const DashboardView = ({ loading, data, user, formatSafeDate, setActiveTab, hand
         if (bdayStr === todayStr) birthdays.push(h);
       }
 
-      // Requisitos faltantes
-      if (h.activo && h.requisitos) {
-        const faltantes = Object.keys(h.requisitos).filter(k => !h.requisitos[k]);
-        if (faltantes.length > 0) {
-          missingDocs.push({ ...h, faltantes });
-        }
-      }
-    });
-
     const distribution = Object.values(positionsMap).filter(s => s.value > 0);
 
-    return { attendance, distribution, birthdays, missingDocs };
+    return { attendance, distribution, birthdays };
   }, [data, formatSafeDate]);
 
   if (loading) return <div style={{ textAlign: 'center', padding: '5rem' }}><ActivityIndicator /> Generando resumen del panel...</div>;
@@ -269,20 +260,6 @@ const DashboardView = ({ loading, data, user, formatSafeDate, setActiveTab, hand
               </div>
             )}
 
-            {/* Documentos Faltantes */}
-            <div>
-              <p style={{ margin: '0 0 10px 0', fontSize: '0.8rem', fontWeight: 'bold', color: '#EF4444', textTransform: 'uppercase' }}>📑 Documentos Faltantes</p>
-              {chartData.missingDocs.length > 0 ? (
-                chartData.missingDocs.slice(0, 3).map(h => (
-                  <div key={h._id} style={{ borderLeft: '3px solid #EF4444', padding: '8px 12px', background: '#FEF2F2', borderRadius: '0 10px 10px 0', marginBottom: '8px' }}>
-                    <p style={{ margin: 0, fontSize: '0.85rem', fontWeight: 'bold' }}>{h.nombre} {h.apellido}</p>
-                    <p style={{ margin: 0, fontSize: '0.7rem', color: '#B91C1C' }}>Faltan: {h.faltantes.join(', ')}</p>
-                  </div>
-                ))
-              ) : (
-                <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>✅ Todo al día.</p>
-              )}
-              {chartData.missingDocs.length > 3 && <button onClick={() => setActiveTab('Miembros')} style={{ background: 'none', border: 'none', color: '#EF4444', fontSize: '0.75rem', cursor: 'pointer', padding: 0 }}>Ver todos ({chartData.missingDocs.length})</button>}
             </div>
          </div>
 
