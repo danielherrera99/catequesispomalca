@@ -10,7 +10,7 @@ const DashboardView = ({ loading, data, user, formatSafeDate, setActiveTab, hand
 
   // Procesamiento de Datos para Gráficos
   const chartData = useMemo(() => {
-    if (!data) return { attendance: [], distribution: [], birthdays: [], missingDocs: [] };
+    if (!data) return { attendance: [], distribution: [], birthdays: [] };
 
     // 1. Procesar Asistencia (Tendencia)
     const now = new Date();
@@ -70,6 +70,7 @@ const DashboardView = ({ loading, data, user, formatSafeDate, setActiveTab, hand
         const bdayStr = new Date(h.fechaNacimiento).toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit' });
         if (bdayStr === todayStr) birthdays.push(h);
       }
+    });
 
     const distribution = Object.values(positionsMap).filter(s => s.value > 0);
 
@@ -261,7 +262,7 @@ const DashboardView = ({ loading, data, user, formatSafeDate, setActiveTab, hand
             )}
 
             </div>
-         </div>
+
 
          {/* Próximo Evento / Actividad */}
          <div className="glass-card" style={{ padding: '1.5rem', border: '1px solid rgba(139, 90, 43, 0.1)', position: 'relative', overflow: 'hidden' }}>
